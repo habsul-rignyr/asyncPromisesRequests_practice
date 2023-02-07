@@ -45,15 +45,22 @@ const fakeRequest = (url) => {
 		if (rand < 0.3){
 			reject({status: 404});
 		} else {
-			resolve();
+			const pages = {
+				'/users': [{id: 1, username: 'Bobo'}, 
+									 {id: 2, username: 'Bibby'}],
+				'/about': 'This is the about page!'
+			};
+			const data = pages[url];
+			resolve({status: 200, data});
 		}
-		}, 500)		
-	})
-}
+		}, 500);		
+	});
+};
 
-fakeRequest().then(() => {
-	console.log("request worked!")
+fakeRequest('/users').then((res) => {
+	console.log("request worked!");
+	console.log(res.status, res.data);
 }).catch((res) => {
-	console.log(res.status)
-	console.log("request failed!")
+	console.log(res.status);
+	console.log("request failed!");
 });
